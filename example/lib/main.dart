@@ -1,4 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:mobpay/mobpay.dart';
+import 'package:mobpay/models/Customer.dart';
+import 'package:mobpay/models/Merchant.dart';
+import 'package:mobpay/models/Payment.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,10 +44,47 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               ElevatedButton(
-                  onPressed: () => print("hello"), child: Text("Pay"))
+                  onPressed: () async {
+                    Mobpay mobpay = new Mobpay();
+                    Merchant merchant = Merchant("BMATKE0001", "ISKWE");
+                    Payment payment = Payment(
+                        100,
+                        Random().nextInt(1000).toString(),
+                        Random().nextInt(1000).toString(),
+                        "food",
+                        "KES",
+                        "Buying tings");
+                    Customer customer = Customer(
+                        "1",
+                        "Allan",
+                        "Mageto",
+                        "allan.mageto@yopmail.com",
+                        "0713805241",
+                        "NBI",
+                        "KEN",
+                        "00100",
+                        'KIBIKO',
+                        "KAJIADO");
+                    mobpay.pay(
+                        merchant,
+                        payment,
+                        customer,
+                        transactionSuccessfullCallback,
+                        transactionFailureCallback);
+                    print("hello");
+                  },
+                  child: Text("Pay"))
             ],
           ),
         ) // This trailing comma makes auto-formatting nicer for build methods.
         );
+  }
+
+  void transactionSuccessfullCallback(int) {
+    print(int);
+  }
+
+  void transactionFailureCallback(int) {
+    print(int);
   }
 }
