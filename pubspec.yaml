@@ -11,8 +11,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  url_launcher: ^6.0.3
+  mqtt_client: ^9.0.0
+
+  # meant for network calls and making my life way easier
+  dio: ^4.0.0
+  retrofit: ^2.0.0-beta1
+  json_annotation: ^4.0.1
+  built_value: ^8.0.4
 
 dev_dependencies:
+  retrofit_generator: any
+  build_runner: ^1.10.0
+  json_serializable: ^4.1.0
+  built_value_generator: ^8.0.4
   flutter_test:
     sdk: flutter
 
