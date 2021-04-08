@@ -68,7 +68,7 @@ class TransactionPayload {
       this.customerStreet,
       this.customerState});
 
-  TransactionPayload.meh(
+  TransactionPayload.compact(
       Merchant merchant, Payment payment, Customer customer, Config? config) {
     this.merchantCode = merchant.merchantId;
     this.domain = merchant.domain;

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -6,7 +8,11 @@ import 'models/Merchant.dart';
 import 'models/Payment.dart';
 
 class Utils {
-  void mqtt(Merchant merchant, Payment payment) async {
+  void mqtt(
+      Merchant merchant,
+      Payment payment,
+      Function(Map<String, dynamic>) transactionSuccessfullCallback,
+      Function(Map<String, dynamic>) transactionFailureCallback) async {
     final client = MqttServerClient('testmerchant.interswitch-ke.com', '');
     client.logging(on: false);
     client.onDisconnected = _onDisconnected;
@@ -40,13 +46,22 @@ class Utils {
     }
 
     client.published!.listen((MqttPublishMessage message) {
-      print("MQTT: FROM LISTEN");
+      print("MQTT: MESSAGE RECEIVED");
       print(MqttPublishPayload.bytesToStringAsString(message.payload.message!));
+      Map<String, dynamic> mqttPayload = json.decode(
+          MqttPublishPayload.bytesToStringAsString(message.payload.message!));
       client.disconnect();
       closeWebView();
-      // transactionSuccessfullCallback(1);
+      if (mqttPayload.containsKey('error')) {
+        transactionFailureCallback(mqttPayload);
+      } else {
+        transactionSuccessfullCallback(mqttPayload);
+      }
     });
-    var transactionTopic = '#';
+    var transactionTopic = "merchant_portal/" +
+        merchant.merchantId +
+        "/" +
+        payment.transactionReference;
     client.subscribe(transactionTopic, MqttQos.atMostOnce);
   }
 
