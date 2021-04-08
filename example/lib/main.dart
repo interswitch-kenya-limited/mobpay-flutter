@@ -147,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   "Allan",
                                   "Mageto",
                                   "allan.mageto@yopmail.com",
-                                  "0713805241",
+                                  "0700000000",
                                   "NBI",
                                   "KEN",
                                   "00100",
