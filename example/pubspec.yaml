@@ -1,5 +1,5 @@
 name: Mobpay
-description: A new Flutter project.
+description: This package is meant to aid in integrating to Interswitch IPG for the following services
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
