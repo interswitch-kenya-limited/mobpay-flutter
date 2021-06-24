@@ -138,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               Payment payment = Payment(
                                   100,
                                   Random().nextInt(1000).toString(),
-                                  Random().nextInt(1000).toString(),
+                                  Random().nextInt(1000000).toString(),
                                   "food",
                                   "KES",
                                   "Buying tings");
@@ -156,12 +156,12 @@ class _MyHomePageState extends State<MyHomePage> {
                               Config config = Config(
                                   iconUrl:
                                       "https://images.pexels.com/photos/104372/pexels-photo-104372.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
-                              Mobpay mobpay = new Mobpay(merchant, false);
+                              Mobpay mobpay = new Mobpay(merchant, true);
                               mobpay.pay(
                                   payment: payment,
                                   customer: customer,
                                   transactionSuccessfullCallback:
-                                      transactionFailureCallback,
+                                      transactionSuccessfullCallback,
                                   transactionFailureCallback:
                                       transactionFailureCallback,
                                   config: config);
@@ -180,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void transactionSuccessfullCallback(payload) {
     final snackBar = SnackBar(
-      content: Text(payload.toString()),
+      content: Text("transaction success" + payload.toString()),
       action: SnackBarAction(
         label: 'Undo',
         onPressed: () {
@@ -197,7 +197,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void transactionFailureCallback(payload) {
     {
       final snackBar = SnackBar(
-        content: Text(payload.toString()),
+        content: Text("transaction failure" + payload.toString()),
         action: SnackBarAction(
           label: 'Undo',
           onPressed: () {

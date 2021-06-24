@@ -1,7 +1,6 @@
 # example
 
-A new Flutter project.
-
+SDK for flutter to help integrate to the Interswitch Payment Gateway.
 ## Getting Started
 
 This project is a starting point for a Flutter application.

@@ -6,27 +6,28 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'models/Merchant.dart';
 import 'models/Payment.dart';
+import 'models/Urls.dart';
 
 class Utils {
   void mqtt(
       Merchant merchant,
       Payment payment,
+      Urls urls,
       Function(Map<String, dynamic>) transactionSuccessfullCallback,
       Function(Map<String, dynamic>) transactionFailureCallback) async {
-    final client = MqttServerClient('testmerchant.interswitch-ke.com', '');
+    final client = MqttServerClient(urls.mqttBaseUrl, '');
     client.logging(on: false);
     client.onDisconnected = _onDisconnected;
     client.onSubscribed = _onSubscribed;
     final connMess = MqttConnectMessage()
-        .withClientIdentifier('Mqtt_MyClientUniqueIdQ1')
+        .withClientIdentifier(
+            new DateTime.now().millisecondsSinceEpoch.toString())
         .withWillTopic(
             'willtopic') // If you set this you must set a will message
         .withWillMessage('My Will message')
         .startClean() // Non persistent session for testing
         .withWillQos(MqttQos.atLeastOnce);
-    print('MQTT::Mosquitto client connecting....');
     client.connectionMessage = connMess;
-
     try {
       await client.connect();
     } on Exception catch (e) {
@@ -37,12 +38,12 @@ class Utils {
 
     /// Check we are connected
     if (client.connectionStatus!.state == MqttConnectionState.connected) {
-      print('MQTT::Mosquitto client connected');
     } else {
       print(
           'MQTT::ERROR Mosquitto client connection failed - disconnecting, state is ${client.connectionStatus!.state}');
       //throw error failed to connect to mqtt
       client.disconnect();
+      throw 'Could not connect to mqtt client';
     }
 
     client.published!.listen((MqttPublishMessage message) {
@@ -52,7 +53,8 @@ class Utils {
           MqttPublishPayload.bytesToStringAsString(message.payload.message!));
       client.disconnect();
       closeWebView();
-      if (mqttPayload.containsKey('error')) {
+      if (mqttPayload.containsKey('error') ||
+          !mqttPayload.containsKey("transactionRef")) {
         transactionFailureCallback(mqttPayload);
       } else {
         transactionSuccessfullCallback(mqttPayload);

@@ -6,9 +6,9 @@ import 'package:retrofit/http.dart';
 
 part 'RestClient.g.dart';
 
-@RestApi(baseUrl: "https://gatewaybackend-uat.quickteller.co.ke")
+@RestApi()
 abstract class RestClient {
-  factory RestClient(Dio dio, {String? baseUrl}) = _RestClient;
+  factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
   @POST("/ipg-backend/api/checkout")
   @FormUrlEncoded()

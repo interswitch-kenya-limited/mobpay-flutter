@@ -1,7 +1,6 @@
 name: mobpay
-description: A new Flutter package project.
-version: 0.0.2
-author: 
+description: This package is meant to aid in integrating to Interswitch IPG for the following services
+version: 0.0.4
 homepage: https://business.quickteller.co.ke/
 
 environment:

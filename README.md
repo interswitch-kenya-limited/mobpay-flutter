@@ -22,18 +22,21 @@ You will have to create an instance of the Merchant class with the following det
 - Merchant Id 
 - Domain Id
 ```dart
-Merchant merchant = Merchant("ISWKEN0001", "ISKWE");
+Merchant merchant = Merchant("ISWKEN0001", "ISWKE");
 ```
 
 ### Payment Details
 
-Create an instance of the Payment class with the follwing items: 
+Create an instance of the Payment class with the following items: 
 - #### Amount
-The amount would be sent to us in the double currency format. i.e you will have to multiply the amount by 100. An example is if the value of an apple fruit is 99.90 (Ninenty nine Shillings and ninety cents) you will have to send it to us as 9990
+The amount would be sent to us in the double currency format. i.e you will have to multiply the amount by 100. An example is if the value of an apple fruit is 99.90 (Ninety nine Shillings and ninety cents) you will have to send it to us as 9990
 - #### Order Id
+Merchant's orderId for the payment item, similar to receipt number, duplicates allowed. 
 - #### Transaction Reference
+A unique identifier of the transaction on the merchant's side – maximum 15 characters, duplicates will be rejected.
 - #### Payment Item
 - #### Currency Code
+The ISO currency code e.g. KES  
 - #### Narration
 ```dart
 Payment payment = Payment( 100,
@@ -46,16 +49,25 @@ Random().nextInt(1000).toString(),
 
 ### Customer Details
 - #### id
+The customer's id from the merchant's point of view e.g. email, phone, or database/registration id.
 - #### First Name
+Customer's first name 
 - #### Second Name
+Customer's second name 
 - #### Email
+Customer's email 
 - #### Mobile
+Customer's mobile  
 - #### City
+Customer's city 
 - #### Country
+Customer's country 
 - #### Postal Code
+Customer's postal code 
 - #### Street
+Customer's street 
 - #### State
-
+Customer's state
 
 ```dart
 Customer customer =  Customer(
@@ -125,7 +137,7 @@ payment: payment,
 
 customer: customer,
 
-transactionSuccessfullCallback:
+transactionSuccessfulCallback:
 
 transactionFailureCallback,
 
@@ -138,3 +150,6 @@ config: config);
 ## Source code
 
 Visit  [the Github repository](https://github.com/interswitch-kenya-limited/mobpay-flutter)  to get the source code and releases of this project if you want to try a manual integration process that does not make use of gradle.
+
+
+## Frequently Asked Questions
