@@ -155,14 +155,14 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.4"
+    version: "0.0.5"
   mqtt_client:
     dependency: transitive
     description:
       name: mqtt_client
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.0.0"
+    version: "9.3.2"
   path:
     dependency: transitive
     description:

@@ -9,3 +9,11 @@
 ## [0.0.4] - Error Handling in mobile
 
 * Error handling done for mobile transactions
+
+
+## [0.0.5] - Added primary accent color
+
+* Added primary accent color in the config object 
+* removed will topic
+* Updated mqtt_client to version 9.3 
+* Changed to named parameters

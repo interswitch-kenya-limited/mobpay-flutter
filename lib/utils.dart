@@ -22,10 +22,6 @@ class Utils {
     final connMess = MqttConnectMessage()
         .withClientIdentifier(
             new DateTime.now().millisecondsSinceEpoch.toString())
-        .withWillTopic(
-            'willtopic') // If you set this you must set a will message
-        .withWillMessage('My Will message')
-        .startClean() // Non persistent session for testing
         .withWillQos(MqttQos.atLeastOnce);
     client.connectionMessage = connMess;
     try {
@@ -48,7 +44,6 @@ class Utils {
 
     client.published!.listen((MqttPublishMessage message) {
       print("MQTT: MESSAGE RECEIVED");
-      print(MqttPublishPayload.bytesToStringAsString(message.payload.message!));
       Map<String, dynamic> mqttPayload = json.decode(
           MqttPublishPayload.bytesToStringAsString(message.payload.message!));
       client.disconnect();

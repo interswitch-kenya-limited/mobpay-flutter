@@ -17,7 +17,7 @@ class Mobpay {
   Urls urls = Urls(
       ipgBaseUrl: "https://gatewaybackend-uat.quickteller.co.ke",
       mqttBaseUrl: 'testmerchant.interswitch-ke.com');
-  Mobpay(this.merchant, this.live) {
+  Mobpay({required this.merchant, required this.live}) {
     this.live = live;
     this.merchant = merchant;
     if (live) {

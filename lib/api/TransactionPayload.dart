@@ -18,6 +18,7 @@ class TransactionPayload {
   String? narration;
   String? redirectUrl = "https://uat.quickteller.co.ke/";
   String? iconUrl;
+  String? primaryAccentColor;
   String? merchantName;
   String? providerIconUrl;
   String? cardTokensJson; //TODO
@@ -51,6 +52,7 @@ class TransactionPayload {
       this.narration,
       this.redirectUrl,
       this.iconUrl,
+      this.primaryAccentColor,
       this.merchantName,
       this.providerIconUrl,
       this.cardTokensJson,
@@ -82,6 +84,7 @@ class TransactionPayload {
     if (config != null) {
       this.providerIconUrl = config.providerIconUrl ??= null;
       this.iconUrl = config.iconUrl ??= null;
+      this.primaryAccentColor = config.primaryAccentColor ??= null;
     }
     //CUSTOMER DETAILS
     this.customerId = customer.id;

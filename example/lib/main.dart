@@ -155,8 +155,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                   "KAJIADO");
                               Config config = Config(
                                   iconUrl:
-                                      "https://images.pexels.com/photos/104372/pexels-photo-104372.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
-                              Mobpay mobpay = new Mobpay(merchant, true);
+                                      "https://images.pexels.com/photos/104372/pexels-photo-104372.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                                  primaryAccentColor: '#D433FF');
+                              Mobpay mobpay =
+                                  new Mobpay(merchant: merchant, live: false);
                               mobpay.pay(
                                   payment: payment,
                                   customer: customer,
