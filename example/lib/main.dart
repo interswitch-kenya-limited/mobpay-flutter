@@ -134,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ElevatedButton(
                             onPressed: () {
                               Merchant merchant =
-                                  Merchant("ISWKEN0001", "ISKWE");
+                                  Merchant("ISWKEN0001", "ISWkE");
                               Payment payment = Payment(
                                   100,
                                   Random().nextInt(1000).toString(),

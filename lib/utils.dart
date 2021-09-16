@@ -16,7 +16,8 @@ class Utils {
       Function(Map<String, dynamic>) transactionSuccessfullCallback,
       Function(Map<String, dynamic>) transactionFailureCallback) async {
     final client = MqttServerClient(urls.mqttBaseUrl, '');
-    client.logging(on: false);
+    client.keepAlivePeriod = 10;
+    client.logging(on: true);
     client.onDisconnected = _onDisconnected;
     client.onSubscribed = _onSubscribed;
     final connMess = MqttConnectMessage()
@@ -45,14 +46,13 @@ class Utils {
     client.published!.listen((MqttPublishMessage message) {
       print("MQTT: MESSAGE RECEIVED");
       Map<String, dynamic> mqttPayload = json.decode(
-          MqttPublishPayload.bytesToStringAsString(message.payload.message!));
+          MqttPublishPayload.bytesToStringAsString(message.payload.message));
       client.disconnect();
-      closeWebView();
-      if (mqttPayload.containsKey('error') ||
-          !mqttPayload.containsKey("transactionRef")) {
-        transactionFailureCallback(mqttPayload);
-      } else {
+      if (mqttPayload['responseCode'] == "00" ||
+          mqttPayload['responseCode'] == "0") {
         transactionSuccessfullCallback(mqttPayload);
+      } else {
+        transactionFailureCallback(mqttPayload);
       }
     });
     var transactionTopic = "merchant_portal/" +
@@ -62,18 +62,12 @@ class Utils {
     client.subscribe(transactionTopic, MqttQos.atMostOnce);
   }
 
-  /// The subscribed callback
-  ///
-  /// make this private
   void _onSubscribed(String topic) {
     print('MQTT::Subscription confirmed for topic $topic');
   }
 
-  /// The unsolicited disconnect callback
-  ///
-  /// make this private
   void _onDisconnected() {
-    //read about dart error handling
+    closeWebView();
     print('MQTT::OnDisconnected client callback - Client disconnection');
   }
 

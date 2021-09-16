@@ -17,3 +17,8 @@
 * removed will topic
 * Updated mqtt_client to version 9.3 
 * Changed to named parameters
+
+## [0.0.6] - MQTT stability fixes
+
+* Better error handling
+* Introduced keep alive in mqtt
