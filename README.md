@@ -87,7 +87,7 @@ Customer customer =  Customer(
 "someone@yopmail.com",
 "0700000000",
 "NBI",
-"KEN",
+"KE",
 "00100",
 'KIBIKO',
 "KAJIADO");

@@ -1,6 +1,6 @@
 name: mobpay
 description: This package is meant to aid in integrating to Interswitch IPG for the following services
-version: 0.0.5
+version: 0.0.6
 homepage: https://business.quickteller.co.ke/
 
 environment:
