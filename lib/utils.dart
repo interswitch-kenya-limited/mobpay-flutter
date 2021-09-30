@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:mobpay/Ipg.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,12 +11,15 @@ import 'models/Payment.dart';
 import 'models/Urls.dart';
 
 class Utils {
-  void mqtt(
-      Merchant merchant,
-      Payment payment,
-      Urls urls,
-      Function(Map<String, dynamic>) transactionSuccessfullCallback,
-      Function(Map<String, dynamic>) transactionFailureCallback) async {
+  BuildContext context;
+  Function(Map<String, dynamic>) transactionSuccessfullCallback;
+  Function(Map<String, dynamic>) transactionFailureCallback;
+  Utils(
+      {required this.context,
+      required this.transactionSuccessfullCallback,
+      required this.transactionFailureCallback});
+  void mqtt(Merchant merchant, Payment payment, Urls urls) async {
+    this.context = context;
     final client = MqttServerClient(urls.mqttBaseUrl, '');
     client.keepAlivePeriod = 10;
     client.logging(on: true);
@@ -67,24 +72,24 @@ class Utils {
   }
 
   void _onDisconnected() {
-    closeWebView();
+    Navigator.maybePop(context);
     print('MQTT::OnDisconnected client callback - Client disconnection');
   }
 
-  ///URL LAUNCHER UTIL
-  ///
-  /// start using chrome tabs if possible
-  ///
-  Future<void> launchWebView(String url) async {
+  Future<void> launchWebView(String url, BuildContext context) async {
     if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: true,
-        forceWebView: true,
-        enableJavaScript: true,
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => WebViewExample(
+                  url: url,
+                  transactionSuccessfullCallback:
+                      transactionSuccessfullCallback,
+                  transactionFailureCallback: transactionFailureCallback,
+                )),
       );
     } else {
-      throw 'Could not launch $url';
+      throw 'Could not lunch $url';
     }
   }
 }

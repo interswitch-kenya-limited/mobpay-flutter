@@ -10,6 +10,7 @@ import 'api/TransactionPayload.dart';
 import 'models/Customer.dart';
 import 'models/Merchant.dart';
 import 'models/Payment.dart';
+import 'package:flutter/material.dart';
 
 class Mobpay {
   Merchant merchant;
@@ -32,12 +33,14 @@ class Mobpay {
       required Customer customer,
       required Function(Map<String, dynamic>) transactionSuccessfullCallback,
       required Function(Map<String, dynamic>) transactionFailureCallback,
+      required BuildContext context,
       Config? config}) async {
     try {
-      Utils utils = Utils();
-      //pass both transaction sucess and failure here
-      utils.mqtt(this.merchant, payment, urls, transactionSuccessfullCallback,
-          transactionFailureCallback);
+      Utils utils = Utils(
+          context: context,
+          transactionFailureCallback: transactionFailureCallback,
+          transactionSuccessfullCallback: transactionSuccessfullCallback);
+      utils.mqtt(this.merchant, payment, urls);
       TransactionPayload transactionPayload =
           TransactionPayload.compact(this.merchant, payment, customer, config);
       final formDataClient = RestClient(
@@ -50,7 +53,7 @@ class Mobpay {
           baseUrl: urls.ipgBaseUrl);
       var checkout = await formDataClient.postCheckout(transactionPayload);
       utils.launchWebView(
-          checkout.response.headers.value('location').toString());
+          checkout.response.headers.value('location').toString(), context);
     } catch (e) {
       throw e;
     }

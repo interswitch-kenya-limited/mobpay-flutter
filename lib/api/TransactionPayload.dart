@@ -28,6 +28,7 @@ class TransactionPayload {
   String? terminalId = "3TLP0001";
   String? terminalType = "Flutter";
   String? channel = "MOBILE";
+  String? redirectMerchantName = "application";
   int? fee = 0;
   int? preauth;
   String? customerId;
