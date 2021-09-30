@@ -40,6 +40,7 @@ TransactionPayload _$TransactionPayloadFromJson(Map<String, dynamic> json) {
     ..terminalId = json['terminalId'] as String?
     ..terminalType = json['terminalType'] as String?
     ..channel = json['channel'] as String?
+    ..redirectMerchantName = json['redirectMerchantName'] as String?
     ..fee = json['fee'] as int?;
 }
 
@@ -65,6 +66,7 @@ Map<String, dynamic> _$TransactionPayloadToJson(TransactionPayload instance) =>
       'terminalId': instance.terminalId,
       'terminalType': instance.terminalType,
       'channel': instance.channel,
+      'redirectMerchantName': instance.redirectMerchantName,
       'fee': instance.fee,
       'preauth': instance.preauth,
       'customerId': instance.customerId,

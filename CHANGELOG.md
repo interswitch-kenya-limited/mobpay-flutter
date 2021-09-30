@@ -22,3 +22,10 @@
 
 * Better error handling
 * Introduced keep alive in mqtt
+
+## [0.1.0] - Stability Fixes
+
+* Introduced the context parameter in the pay function
+* Moved from url to webkit 
+* Other bug fixes
+* Enabled a user to exit by pressing on return to app on the web browser
