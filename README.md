@@ -200,3 +200,15 @@ context: context);
 Visit [the Github repository](https://github.com/interswitch-kenya-limited/mobpay-flutter) to get the source code and releases of this project if you want to try a manual integration process that does not make use of gradle.
 
 ## Frequently Asked Questions
+
+On  android 7 and above please add the following to your AndroidManifest.xml
+
+```xml
+<queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+```
