@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -225,7 +225,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     primaryAccentColor:
                                         _primaryAccentColor.value.text);
                                 Mobpay mobpay =
-                                    new Mobpay(merchant: merchant, live: false);
+                                    new Mobpay(merchant: merchant, live: true);
                                 mobpay.pay(
                                     payment: payment,
                                     customer: customer,
