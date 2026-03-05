@@ -11,7 +11,7 @@ class Payment {
   String? terminalId;
 
   Payment(this.amount, this.transactionReference, this.orderId,
-      this.paymentItem, this.currencyCode, this.narration);
+      this.paymentItem, this.currencyCode, this.narration, this.terminalId, this.terminalType, this.preauth);
 
   int getPreauth() {
     if (this.preauth) {
