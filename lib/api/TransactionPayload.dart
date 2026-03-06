@@ -16,7 +16,7 @@ class TransactionPayload {
   String? currencyCode;
   int? amount;
   String? narration;
-  String? redirectUrl = "https://uat.quickteller.co.ke/";
+  String? redirectUrl = "";
   String? iconUrl;
   String? primaryAccentColor;
   String? merchantName;

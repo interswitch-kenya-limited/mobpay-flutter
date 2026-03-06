@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -32,6 +31,21 @@ class _WebViewExampleState extends State<WebViewExample> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: _interceptNavigation,
+          onPageFinished: (String url) {
+            // ✅ Disable zoom on input focus
+            _controller.runJavaScript('''
+              var meta = document.querySelector('meta[name=viewport]');
+              if (meta != null) {
+                meta.setAttribute('content',
+                  'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+              } else {
+                var newMeta = document.createElement('meta');
+                newMeta.name = 'viewport';
+                newMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+                document.getElementsByTagName('head')[0].appendChild(newMeta);
+              }
+            ''');
+          },
         ),
       )
       ..loadRequest(Uri.parse(widget.url));
@@ -63,9 +77,10 @@ class _WebViewExampleState extends State<WebViewExample> {
             widget.transactionFailureCallback(jsonResponse);
           }
         }
+        return NavigationDecision.prevent; // ✅ stop blank page
       } catch (e) {
-        // Handle malformed response or decode issues
         debugPrint("Navigation intercept error: $e");
+        return NavigationDecision.prevent;
       }
     }
     return NavigationDecision.navigate;

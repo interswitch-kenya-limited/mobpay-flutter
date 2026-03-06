@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -40,26 +41,39 @@ class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>();
   final _merchantId = TextEditingController(text: "ISWKEN0001");
   final _domainId = TextEditingController(text: "ISWKE");
+  final _clientId = TextEditingController(text: "IKIA7C2981C715915A2D9DF952D8422F956BAB4ABB8A");
+  final _clientSecret = TextEditingController(text: "2NZ4AlYFzabz6+eTMp9pYJvcgWTLjfYBvsFQFRkfuUc=");
+  final _terminalId = TextEditingController(text: "3CRZ0001");
+  final _terminalType = TextEditingController(text: "MOBILE");
+  final _preAuth = TextEditingController(text: "1");
+
+
 
   final _amount = TextEditingController(text: "100");
   final _transactionRef =
       TextEditingController(text: Random().nextInt(1000).toString());
   final _orderId =
       TextEditingController(text: Random().nextInt(1000).toString());
-  final _paymentItem = TextEditingController(text: "food");
-  final _currencyCode = TextEditingController(text: "KES");
+  final _paymentItem = TextEditingController(text: "CRD");
+  final _currencyCode = TextEditingController(text: "USD");
   final _narration = TextEditingController(text: "Buying tings");
+  final _pan = TextEditingController(text: "4111111111111111");
+  final _cvv = TextEditingController(text: "234");
+  final _expiryYear = TextEditingController(text: "23");
+  final _expMonth = TextEditingController(text: "02");
 
-  final _id = TextEditingController(text: "1");
+
+  final _customerId = TextEditingController(text: "test@example.com");
   final _firstName = TextEditingController(text: "Jane");
   final _secondName = TextEditingController(text: "Doe");
   final _email = TextEditingController(text: "john.doe@yopmail.com");
   final _mobile = TextEditingController(text: "0700000000");
   final _city = TextEditingController(text: "NBI");
-  final _country = TextEditingController(text: "KEN");
-  final _postalCode = TextEditingController(text: "00100");
-  final _street = TextEditingController(text: "KIBIKO");
-  final _state = TextEditingController(text: "KAJIADO");
+  final _country = TextEditingController(text: "KE");
+  final _postalCode = TextEditingController(text: "00200");
+  final _street = TextEditingController(text: "Westlands");
+  final _state = TextEditingController(text: "NBI");
+  late bool _tokenize = true;
 
   final _iconUrl = TextEditingController(
       text:
@@ -111,6 +125,55 @@ class _MyHomePageState extends State<MyHomePage> {
                           decoration: InputDecoration(
                               hintText: 'Order Id', labelText: 'Order Id'),
                         ),
+
+                        TextFormField(
+                          controller: _clientId,
+                          decoration: InputDecoration(
+                              hintText: 'Client Id', labelText: 'Client Id'),
+                        ),
+
+                        TextFormField(
+                          controller: _clientSecret,
+                          decoration: InputDecoration(
+                              hintText: 'Client Secret', labelText: 'Client Secret'),
+                        ),
+
+                        TextFormField(
+                          controller: _pan,
+                          decoration: InputDecoration(
+                              hintText: 'Pan', labelText: 'Pan'),
+                        ),
+
+                        TextFormField(
+                          controller: _cvv,
+                          decoration: InputDecoration(
+                              hintText: 'CVV', labelText: 'CVV'),
+                        ),
+
+                        TextFormField(
+                          controller: _terminalId,
+                          decoration: InputDecoration(
+                              hintText: 'Terminal ID', labelText: 'Terminal ID'),
+                        ),
+
+                        TextFormField(
+                          controller: _terminalType,
+                          decoration: InputDecoration(
+                              hintText: 'Terminal Type', labelText: 'Terminal Type'),
+                        ),
+
+                        TextFormField(
+                          controller: _expMonth,
+                          decoration: InputDecoration(
+                              hintText: 'Exp Month', labelText: 'Exp Month'),
+                        ),
+
+                        TextFormField(
+                          controller: _expiryYear,
+                          decoration: InputDecoration(
+                              hintText: 'Expiry Year', labelText: 'Expiry Year'),
+                        ),
+
                         TextFormField(
                           controller: _paymentItem,
                           decoration: InputDecoration(
@@ -130,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         // customer details
                         TextFormField(
-                          controller: _id,
+                          controller: _customerId,
                           decoration: InputDecoration(
                               hintText: 'Customer Id',
                               labelText: 'Customer Id'),
@@ -195,6 +258,15 @@ class _MyHomePageState extends State<MyHomePage> {
                               hintText: 'primaryAccentColor',
                               labelText: 'primaryAccentColor'),
                         ),
+                        SwitchListTile(
+                          title: Text('Tokenize'),
+                          value: _tokenize,
+                          onChanged: (bool value) {
+                            setState(() {
+                              _tokenize = value;
+                            });
+                          },
+                        ),
                         Padding(
                           padding: EdgeInsets.only(bottom: 50, top: 50),
                           child: ElevatedButton(
@@ -208,9 +280,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                     _orderId.value.text,
                                     _paymentItem.value.text,
                                     _currencyCode.value.text,
-                                    _narration.value.text);
+                                    _narration.value.text,
+                                    _terminalId.value.text,
+                                    _terminalType.value.text,
+                                    _preAuth.value.text == "1");
                                 Customer customer = Customer(
-                                    _id.value.text,
+                                    _customerId.value.text,
                                     _firstName.value.text,
                                     _secondName.value.text,
                                     _email.value.text,
@@ -225,7 +300,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     primaryAccentColor:
                                         _primaryAccentColor.value.text);
                                 Mobpay mobpay =
-                                    new Mobpay(merchant: merchant, live: true);
+                                    new Mobpay(merchant: merchant, live: false);
                                 mobpay.pay(
                                     payment: payment,
                                     customer: customer,
