@@ -300,7 +300,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     primaryAccentColor:
                                         _primaryAccentColor.value.text);
                                 Mobpay mobpay =
-                                    new Mobpay(merchant: merchant, live: false);
+                                    new Mobpay(merchant: merchant, live: true);
                                 mobpay.pay(
                                     payment: payment,
                                     customer: customer,
