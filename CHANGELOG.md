@@ -29,3 +29,10 @@
 * Moved from url to webkit 
 * Other bug fixes
 * Enabled a user to exit by pressing on return to app on the web browser
+
+## [0.4.0] - MQTT WebSocket Migration
+
+* Migrated MQTT connection from TCP to WebSocket (WSS)
+* MQTT connects and subscribes before launching WebView
+* Fixed blank screen after payment response
+* Disabled WebView zoom on card input focus
