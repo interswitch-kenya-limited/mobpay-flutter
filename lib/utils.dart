@@ -21,8 +21,6 @@ class Utils {
     required this.transactionFailureCallback,
   });
 
-  late MqttServerClient _mqttClient;
-
   Future<void> mqttThenLaunch(
       Merchant merchant, Payment payment, Urls urls, String checkoutUrl) async {
 
@@ -33,8 +31,6 @@ class Utils {
     client.websocketProtocols = MqttClientConstants.protocolsSingleDefault;
     client.secure = false;
     client.onBadCertificate = (dynamic certificate) => true;
-
-    _mqttClient = client;
 
     client.keepAlivePeriod = 10;
     client.logging(on: true);
