@@ -103,8 +103,7 @@ class Utils {
   }
 
   Future<void> launchWebView(String url, BuildContext context) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
+    if (await canLaunch(url)) {
       Navigator.push(
         context,
         MaterialPageRoute(
